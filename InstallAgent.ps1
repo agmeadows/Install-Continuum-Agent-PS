@@ -34,17 +34,17 @@
 
 ######SCRIPT PARAMETERS######
 #Company name the script applies to
-$CompanyName = 'Arbor Oakland Group'                  #Name as you'd like it to appear in the email subject
+$CompanyName = ''                                     #Name as you'd like it to appear in the email subject
 #Email configuration
-$EmailSender = 'agentinstall@rehmann.com'             #Who the email should come from
-$EmailRecipient = 'adam.meadows@rehmann.com'          #Who the email should go to
+$EmailSender = ''                                     #Who the email should come from
+$EmailRecipient = ''                                  #Who the email should go to
 $EmailSubject = "New agent install for $CompanyName"  #Do not change unless necessary
 $EmailBody = ""                                       #Do not change unless necessary
 $EmailServer = 'mail.smtp2go.com'                     #Do not change unless necessary
 $EmailPort = 2525                                     #Do not change unless necessary
 
 #Path to agent install files and log file name
-$BasePath = '\\AOGDC01\ContinuumAgent\'               #Example: '\\SERVER01\ContinuumAgent\'
+$BasePath = ''                                        #Example: '\\SERVER01\ContinuumAgent\'
 $AgentFolder = 'Agents\'                              #Example: 'Agents\'
 $LogFolder = 'Logs\'                                  #Example: 'Logs\'
 $LogFile = $env:ComputerName + ".txt"
@@ -112,7 +112,11 @@ function InstallAgent($InstallerInfo, $Path, $MachineDetails, $EmailDetails, $Co
             $CurTime = Get-Date
             $RegCheck = Get-ItemProperty -Path HKLM:\Software\WOW6432Node\SAAZOD
 
-        }        catch [System.Management.Automation.ItemNotFoundException]        {            Write-Host "Continuum is not installed yet", $CurTime        }
+        }
+        catch [System.Management.Automation.ItemNotFoundException]
+        {
+            Write-Host "Continuum is not installed yet", $CurTime
+        }
     }
 
     #Populate machine properties
@@ -155,7 +159,11 @@ function ContinuumProps
     {
         $agentFile = Test-Path "C:\Program Files (x86)\SAAZOD\SAAZWatchDog.exe"
         $saazReg = Get-ItemProperty -Path HKLM:\Software\WOW6432Node\SAAZOD
-    }    catch [System.Management.Automation.ItemNotFoundException]    {        Write-Host "Continuum agent is not installed"     }
+    }
+    catch [System.Management.Automation.ItemNotFoundException]
+    {
+        Write-Host "Continuum agent is not installed" 
+    }
     finally
     {
         $ErrorActionPreference = "Continue"
